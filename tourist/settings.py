@@ -42,10 +42,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+     #third party package for user registration and authentication endpoints 	
+
+    'drf_yasg',
+
+    'djoser',
 
     'rest_framework',
+	
+	#JWT authentication backend library
+    'rest_framework_simplejwt',
+
     
     'main',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -98,6 +109,14 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

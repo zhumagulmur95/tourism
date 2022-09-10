@@ -1,5 +1,6 @@
-from distutils.command.upload import upload
+from turtle import update
 from django.db import models
+from accounts.models import userProfile
 
 # Create your models here.
 class Region(models.Model):
@@ -15,6 +16,9 @@ class Location(models.Model):
     picture = models.ImageField(upload_to=None, height_field=None, width_field=None)
     chek_tur = models.BooleanField(default=False)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -24,16 +28,24 @@ class Transport(models.Model):
     name = models.CharField(max_length=200)
     quantity_place = models.IntegerField()
     price = models.IntegerField()
+    user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
 
 class Route(models.Model):
+    name = models.CharField(max_length=200)
     time = models.TimeField()
     num_tran = models.IntegerField()
     description = models.TextField()
     check_tur = models.BooleanField(default=False)
     kind_tran = models.ForeignKey(Transport, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -49,16 +61,24 @@ class Food(models.Model):
     price_day = models.CharField(max_length=300)
     check_tur = models.BooleanField(default=False)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
-        return self.name
+        return self.kitchen
 
 class Contact(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
     mobile = models.CharField(max_length=100)
-    telegram = models.CharField(max_length=100)
-    home = models.CharField(max_length=100)
+    telegram = models.CharField(max_length=100, blank=True, null=True)
+    home = models.CharField(max_length=100, blank=True, null=True)
+    user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.name
@@ -72,6 +92,10 @@ class Hotel(models.Model):
     check_tur = models.BooleanField(default=False)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.name

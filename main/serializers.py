@@ -10,7 +10,7 @@ class RegionSerializer(serializers.ModelSerializer):
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ['id', 'name', 'distance_air', 'picture']
+        fields = ['id', 'name', 'distance_air', 'picture', 'region']
 
 class TransportSerializer(serializers.ModelSerializer):
     class Meta:
