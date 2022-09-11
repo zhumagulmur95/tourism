@@ -67,6 +67,19 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
+    'django.middleware.common.CommonMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'https://touristbish.herokuapp.com/',
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    'https://touristbish.herokuapp.com/',
 ]
 
 ROOT_URLCONF = 'tourist.urls'
