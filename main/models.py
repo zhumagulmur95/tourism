@@ -4,6 +4,7 @@ from accounts.models import userProfile
 # Create your models here.
 class Region(models.Model):
     name = models.CharField(max_length=200)
+    picture = models.ImageField(upload_to=None, height_field=None, width_field=None, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -14,6 +15,7 @@ class Location(models.Model):
     distance_air = models.CharField(max_length=200)
     picture = models.ImageField(upload_to=None, height_field=None, width_field=None)
     chek_tur = models.BooleanField(default=False)
+    description = models.TextField()
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
@@ -22,6 +24,15 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
+class Tours(models.Model):
+    name = models.CharField(max_length=200)
+    price = models.IntegerField()
+    description = models.TextField()
+    picture = models.ImageField(upload_to=None, height_field=None, width_field=None, blank=True, null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 class Transport(models.Model):
     name = models.CharField(max_length=200)
@@ -59,6 +70,7 @@ class Food(models.Model):
     description = models.TextField()
     price_day = models.CharField(max_length=300)
     check_tur = models.BooleanField(default=False)
+    picture = models.ImageField(upload_to=None, height_field=None, width_field=None, blank=True, null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     user = models.ForeignKey(userProfile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

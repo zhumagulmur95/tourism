@@ -3,8 +3,8 @@ from accounts.models import userProfile
 from accounts.permissions import IsOwnerProfileOrReadOnly
 from rest_framework import viewsets
 
-from .models import Region, Location, Contact, Hotel, Food, Transport, Route
-from .serializers import RegionSerializer, LocationSerializer, ContactSerializer, HotelSerializer, FoodSerializer, TransportSerializer, RouteSerializer
+from .models import Region, Location, Tours, Contact, Hotel, Food, Transport, Route
+from .serializers import RegionSerializer, LocationSerializer, ToursSerializer, ContactSerializer, HotelSerializer, FoodSerializer, TransportSerializer, RouteSerializer
 
 
 class RegionViewSet(viewsets.ReadOnlyModelViewSet):
@@ -20,7 +20,18 @@ class LocationViewSet(viewsets.ModelViewSet):
         user = User.objects.get(username=self.request.user)
         userP = userProfile.objects.get(user=user)
         serializer.save(user=userP)
-    
+
+
+class ToursViewSet(viewsets.ModelViewSet):
+    queryset = Tours.objects.all()
+    serializer_class = ToursSerializer
+    permission_classes = [IsOwnerProfileOrReadOnly]
+
+    def perform_create(self, serializer):
+        user = User.objects.get(username=self.request.user)
+        userP = userProfile.objects.get(user=user)
+        serializer.save(user=userP)
+
 
 class TransportViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Transport.objects.all()
